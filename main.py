@@ -7,11 +7,11 @@ from flask import Flask, request, render_template, redirect, url_for, flash, abo
 load_dotenv()
 
 # Retrieve database credentials from environment variables
-db_name = os.getenv('DB_NAME')
-db_user = os.getenv('DB_USER')
-db_password = os.getenv('DB_PASSWORD')
-db_host = os.getenv('DB_HOST')
-db_port = os.getenv('DB_PORT')
+db_name = "unisourcedb"
+db_user = "unisourcedbuser"
+db_password = "deuce-unpainted-egotistic-ranting"
+db_host = "ubuunisrcdev01.cse.lehigh.edu"
+db_port = 5432
 
 try:
     # Test database connection
