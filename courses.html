@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSE Courses</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .course-section { margin-bottom: 30px; }
+        .course-section h2 { border-bottom: 2px solid #333; padding-bottom: 10px; }
+        .course { border-bottom: 1px solid #ccc; padding: 15px 0; }
+        .course-title { font-weight: bold; color: #333; }
+        .course-details { color: #666; }
+        .disclaimer { background-color: #f4f4f4; padding: 10px; margin: 10px 0; }
+        a { color: #1b75bc; }
+    </style>
+</head>
+<body>
+    <h1>CSE Course Listings</h1>
+    
+    <div id="summer-courses"></div>
+    <div id="fall-courses"></div>
+
+    <script>
+        // Function to render courses
+        function renderCourses(data) {
+            // Summer Courses
+            const summerCoursesContainer = $('#summer-courses');
+            summerCoursesContainer.append('<h2>Summer 2024 Courses</h2>');
+            summerCoursesContainer.append('<div class="disclaimer">NOTE: This listing represents our current plan for the semester in question. Course offerings and class times are occasionally subject to change for reasons beyond our control.</div>');
+
+            // Full Summer Session
+            if (data.summer_2024.full_summer_session) {
+                summerCoursesContainer.append('<h3>Full Summer Session (5/20/2024 - 8/08/2024)</h3>');
+                data.summer_2024.full_summer_session.forEach(course => {
+                    summerCoursesContainer.append(`
+                        <div class="course">
+                            <div class="course-title">${course.code} ${course.name}</div>
+                            <div class="course-details">${course.schedule}, ${course.professor}</div>
+                            <div class="course-description">${course.description}</div>
+                            ${course.prerequisites ? `<div class="course-prereq">Prerequisites: <a href="/">${course.prerequisites.join(', ')}</a></div>` : ''}
+                        </div>
+                    `);
+                });
+            }
+
+            // Summer Session I
+            if (data.summer_2024.summer_session_i) {
+                summerCoursesContainer.append('<h3>Summer Session I (5/20/2024 - 6/29/2024)</h3>');
+                data.summer_2024.summer_session_i.forEach(course => {
+                    summerCoursesContainer.append(`
+                        <div class="course">
+                            <div class="course-title">${course.code} ${course.name}</div>
+                            <div class="course-details">${course.schedule}, ${course.professor}</div>
+                            <div class="course-description">${course.description}</div>
+                            ${course.prerequisites ? `<div class="course-prereq">Prerequisites: <a href="/">${course.prerequisites.join(', ')}</a></div>` : ''}
+                        </div>
+                    `);
+                });
+            }
+
+            // Summer Session II
+            if (data.summer_2024.summer_session_ii) {
+                summerCoursesContainer.append('<h3>Summer Session II (7/01/2024 - 8/8/2024)</h3>');
+                data.summer_2024.summer_session_ii.forEach(course => {
+                    summerCoursesContainer.append(`
+                        <div class="course">
+                            <div class="course-title">${course.code} ${course.name}</div>
+                            <div class="course-details">${course.schedule}, ${course.professor}</div>
+                            <div class="course-description">${course.description}</div>
+                            ${course.prerequisites ? `<div class="course-prereq">Prerequisites: <a href="/">${course.prerequisites.join(', ')}</a></div>` : ''}
+                        </div>
+                    `);
+                });
+            }
+
+            // Fall Courses
+            const fallCoursesContainer = $('#fall-courses');
+            fallCoursesContainer.append('<h2>Fall 2024 Courses</h2>');
+            fallCoursesContainer.append(`<div class="disclaimer">${data.fall_2024.disclaimer}</div>`);
+            fallCoursesContainer.append(`<div class="non-major-info">${data.fall_2024.non_major_enrollment_info}</div>`);
+
+            data.fall_2024.courses.forEach(course => {
+                fallCoursesContainer.append(`
+                    <div class="course">
+                        <div class="course-title">${course.code} ${course.name}</div>
+                        <div class="course-details">${course.schedule || (course.lecture ? course.lecture.schedule : 'TBA')}, ${course.professor}</div>
+                        <div class="course-description">${course.description}</div>
+                        ${course.prerequisites ? `<div class="course-prereq">Prerequisites: ${course.prerequisites.join(', ')}</div>` : ''}
+                        ${course.lecture && course.lecture.recitations ? 
+                            `<div class="recitations">Recitations: ${course.lecture.recitations.map(r => `${r.code} (${r.schedule})`).join(', ')}</div>` 
+                            : ''}
+                    </div>
+                `);
+            });
+        }
+
+        // Load JSON data
+        renderCourses({
+            "summer_2024": {
+                "full_summer_session": [
+                    {
+                        "code": "CSE 109",
+                        "name": "SYSTEMS SOFTWARE",
+                        "schedule": "TR 4:00-5:00 (Remote Synchronous)",
+                        "professor": "Professor Mark Erle",
+                        "description": "Advanced programming and data structures, including dynamic structures, memory allocation, data organization, symbol tables, hash tables, B-trees, data files. Object-oriented design and implementation of simple assemblers, loaders, interpreters, compilers, and translators. Practical methods for implementing medium-scale programs.",
+                        "prerequisites": ["CSE 017"]
+                    },
+                    {
+                        "code": "CSE 202",
+                        "name": "COMPUTER ORGANIZATION AND ARCHITECTURE",
+                        "schedule": "MW 4:00-6:50 (Remote Synchronous)",
+                        "professor": "Professor Jialiang Tan",
+                        "description": "Interaction between low-level computer architectural properties and high-level program behaviors: instruction set design; digital logics and assembly language; processor organization; the memory hierarchy; multicore and GPU architectures; and processor interrupt/exception models.",
+                        "prerequisites": ["CSE 017"]
+                    },
+                    {
+                        "code": "CSE 241",
+                        "name": "DATA BASE SYSTEMS AND APPLICATIONS",
+                        "schedule": "Remote Asynchronous",
+                        "professor": "Professor Roberto Palmieri",
+                        "description": "Design of large databases: Integration of databases and applications using SQL and JDBC; transaction processing; performance tuning; data mining and data warehouses. Not available to students who have credit for CSE 341 or ISE 224.",
+                        "prerequisites": ["CSE 017"]
+                    },
+                    {
+                        "code": "CSE 298",
+                        "name": "COMPUTER SCIENCE PROJECTS",
+                        "schedule": "MTWR 8:00-9:45 (Remote Synchronous)",
+                        "professor": "Professor Stephen Urban",
+                        "description": "Project-based learning through independent or small-group projects related to computer systems and/or applications. Students will progress through the software development lifecycle, including high-level design, functional and non-functional requirements, implementation, testing, and maintenance.",
+                        "prerequisites": ["CSE 017", "CSE 216"]
+                    }
+                ],
+                "summer_session_i": [
+                    {
+                        "code": "CSE 003",
+                        "name": "INTRODUCTION TO PROGRAMMING, PART A",
+                        "schedule": "MTWR 10:00-11:35 (Remote Synchronous)",
+                        "professor": "Professor Kallie Ziltz",
+                        "description": "Covers the same material as the first half of CSE 007. No prior programming experience needed. Cannot be taken by students who have completed CSE 007."
+                    },
+                    {
+                        "code": "CSE 017",
+                        "name": "PROGRAMMING AND DATA STRUCTURES",
+                        "schedule": "MTWR 10:00-11:35 (Remote Synchronous)",
+                        "professor": "Professor Stephen Urban",
+                        "description": "Design and implementation of algorithms and data structures using Java. Assumes that students have prior experience using conditional statements, loops, arrays, and object-oriented programming in Java.",
+                        "prerequisites": ["CSE 004 or CSE 007 or (CSE 002 and (CSE 001 or CSE 012 or ENGR 010))"]
+                    }
+                ],
+                "summer_session_ii": [
+                    {
+                        "code": "CSE 004",
+                        "name": "INTRODUCTION TO PROGRAMMING, PART B",
+                        "schedule": "MTWR 10:00-11:35 (Remote Synchronous)",
+                        "professor": "Professor Kallie Ziltz",
+                        "description": "Covers the same material as the second half of CSE 007. Cannot be taken by students who have completed CSE 007."
+                    },
+                    {
+                        "code": "CSE 198",
+                        "name": "PYTHON FOR COMPUTER SCIENTISTS",
+                        "schedule": "Remote Asynchronous",
+                        "professor": "Professor Masoud Yari",
+                        "description": "Focuses on advanced data science and computing problems, concepts, and methodologies using scripting programming languages, such as Python.",
+                        "prerequisites": ["MATH 021", "CSE 007 and/or CSE 017"]
+                    }
+                ]
+            },
+            "fall_2024": {
+                "disclaimer": "This listing represents our current plan for the semester. Course offerings and times are subject to change.",
+                "non_major_enrollment_info": "Space is extremely limited. Highly qualified non-majors can request space by contacting the Associate Chair, Prof. Mark Erle.",
+                "courses": [
+                    {
+                        "code": "CSE 109",
+                        "name": "SYSTEMS SOFTWARE",
+                        "professor": "Professor Mark Erle",
+                        "lecture": {
+                            "schedule": "MW 1:35-2:50",
+                            "recitations": [
+                                {"code": "CSE 109-113", "schedule": "W (Lab) 7:15-8:30pm"},
+                                {"code": "CSE 109-114", "schedule": "R (Lab) 7:15-8:30pm"}
+                            ]
+                        },
+                        "description": "Advanced programming and data structures, including dynamic structures, memory allocation, data organization, symbol tables, hash tables, B-trees, data files.",
+                        "prerequisites": ["CSE 017"]
+                    },
+                    {
+                        "code": "CSE 202",
+                        "name": "COMPUTER ORGANIZATION AND ARCHITECTURE",
+                        "schedule": "TR 10:45-12:00",
+                        "professor": "Professor Jialiang Tan",
+                        "description": "Interaction between low-level computer architectural properties and high-level program behaviors: instruction set design; digital logics and assembly language; processor organization.",
+                        "prerequisites": ["CSE 017"]
+                    }
+                ]
+            }
+        });
+    </script>
+</body>
+</html>
