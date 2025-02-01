@@ -1,16 +1,9 @@
-def addEmails():
-    file = open("test.txt", "r")
-    emails = set()
-    emails.add("svm227@lehigh.edu")
-    filewrite = open("write.txt", "w")
-    for email in file:
-        emails.add(email.strip())
+def emails():
+    emails=set()
+    emails.add("test@gmail.com")
+    emails.add("test@gmail.com")
+    emails.add("s@gmail.com")
 
-    for email in emails:
-        filewrite.write(email+"\n")
+    print(emails)
 
-    
-    
-
-addEmails()
-
+emails()

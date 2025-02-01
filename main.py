@@ -7,7 +7,7 @@ from flask import Flask, request, render_template, redirect, url_for, flash, abo
 load_dotenv()
 
 
-# Retrieve database credentials from environment variables
+# loading database credentials from environment variables
 db_name = os.getenv("DB_NAME")
 db_user = os.getenv("DB_USERNAME")
 db_password = os.getenv("DB_PASSWORD")
@@ -15,7 +15,7 @@ db_host = os.getenv("DB_HOST")
 db_port = os.getenv("DB_PORT")
 
 try:
-    # Test database connection
+    # adding db connection
     print(f"DB_HOST: {db_host}")
     print(f"DB_PORT: {db_port}")
     print(f"DB_NAME: {db_name}")
@@ -39,23 +39,34 @@ except Exception as e:
 app = Flask(__name__)
 @app.route("/courses")
 def courses():
-    try:
-        #Query the database to retrieve student data
-        cursor = connection.cursor()
-        cursor.execute("SELECT * FROM my_schema.courses")
-        # Execute the SQL query to retrieve courses
-        courses = cursor.fetchall()  # Fetch all rows from the query
+    print("Courses route accessed.")
 
-        for course in courses:
-            print(course)
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM my_schema.coursesNew")
+    coursesfetched = cursor.fetchall()
 
+    print("Fetched Data:", coursesfetched)  # Debugging
 
+    courses_list = []
+    for row in coursesfetched:
+        courses_list.append({
+            "code": row[1],  # Course code
+            "name": row[2],  # Course name
+            "schedule": row[3],  # Course schedule
+            "professor": row[4],  # Professor
+            "description": row[5],  # Course description
+            "prerequisites": row[6],  # Prerequisites
+            "semester": row[7],  # Semester (e.g., Summer2024)
+            "session_type": row[8]  # Session Type (e.g., Full, SessionI, SessionII)
+        })
 
-        return render_template("courses.html", courses=courses)
+    print("Corrected Courses List:", courses_list)  # Debugging
 
-    except Exception as e:
-        print(f"Error fetching student data: {e}")
-        abort(500, description="Error fetching data from the database.")
+    cursor.close()
+    return render_template("courses.html", courses=courses_list)
+@app.route("/")
+def home():
+    return redirect(url_for("courses"))
 
 if __name__ == "__main__":
     app.run(debug=True)

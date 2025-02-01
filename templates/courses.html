@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSE Courses</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .course-section { margin-bottom: 30px; }
+        .course-section h2 { border-bottom: 2px solid #333; padding-bottom: 10px; }
+        .course { border-bottom: 1px solid #ccc; padding: 15px 0; }
+        .course-title { font-weight: bold; color: #333; }
+        .course-details { color: #666; }
+        .disclaimer { background-color: #f4f4f4; padding: 10px; margin: 10px 0; }
+        a { color: #1b75bc; }
+    </style>
+</head>
+<body>
+    <h1>CSE Course Listings</h1>
+
+    <!-- ====================== SUMMER 2024 ============================= -->
+    <div class="course-section">
+        <h2>Summer 2024 Courses</h2>
+        <div class="disclaimer">
+            NOTE: This listing represents our current plan for the semester in question.
+            Course offerings and class times are occasionally subject to change for reasons beyond our control.
+        </div>
+
+        <!-- ========== Full Summer Session ========== -->
+        <h3>Full Summer Session (5/20/2024 - 8/08/2024)</h3>
+        {% for course in courses %}
+            {% if course.semester == "Summer2024" and course.session_type == "Full" %}
+                <div class="course">
+                    <div class="course-title">
+                        {{ course.code }} {{ course.name }}
+                    </div>
+                    <div class="course-details">
+                        {{ course.schedule }}, {{ course.professor }}
+                    </div>
+                    <div class="course-description">
+                        {{ course.description }}
+                    </div>
+                    {% if course.prerequisites %}
+                        <div class="course-prereq">
+                            Prerequisites:
+                            <a href="#">
+                                {{ course.prerequisites }}
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <!-- ========== Summer Session I ========== -->
+        <h3>Summer Session I (5/20/2024 - 6/29/2024)</h3>
+        {% for course in courses %}
+            {% if course.semester == "Summer2024" and course.session_type == "SessionI" %}
+                <div class="course">
+                    <div class="course-title">
+                        {{ course.code }} {{ course.name }}
+                    </div>
+                    <div class="course-details">
+                        {{ course.schedule }}, {{ course.professor }}
+                    </div>
+                    <div class="course-description">
+                        {{ course.description }}
+                    </div>
+                    {% if course.prerequisites %}
+                        <div class="course-prereq">
+                            Prerequisites:
+                            <a href="#">
+                                {{ course.prerequisites }}
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <!-- ========== Summer Session II ========== -->
+        <h3>Summer Session II (7/01/2024 - 8/8/2024)</h3>
+        {% for course in courses %}
+            {% if course.semester == "Summer2024" and course.session_type == "SessionII" %}
+                <div class="course">
+                    <div class="course-title">
+                        {{ course.code }} {{ course.name }}
+                    </div>
+                    <div class="course-details">
+                        {{ course.schedule }}, {{ course.professor }}
+                    </div>
+                    <div class="course-description">
+                        {{ course.description }}
+                    </div>
+                    {% if course.prerequisites %}
+                        <div class="course-prereq">
+                            Prerequisites:
+                            <a href="#">
+                                {{ course.prerequisites }}
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <!-- ====================== FALL 2024 ============================== -->
+    <div class="course-section">
+        <h2>Fall 2024 Courses</h2>
+        <!-- Example disclaimers (you could store these in your DB or keep them static) -->
+        <div class="disclaimer">
+            This listing represents our current plan for the semester.
+            Course offerings and times are subject to change.
+        </div>
+        <div class="non-major-info">
+            Space is extremely limited. Highly qualified non-majors can request space by contacting the Associate Chair.
+        </div>
+
+        <!-- Loop over all Fall 2024 courses -->
+        {% for course in courses %}
+            {% if course.semester == "Fall2024" %}
+                <div class="course">
+                    <div class="course-title">
+                        {{ course.code }} {{ course.name }}
+                    </div>
+                    <div class="course-details">
+                        {{ course.schedule }}, {{ course.professor }}
+                    </div>
+                    <div class="course-description">
+                        {{ course.description }}
+                    </div>
+                    {% if course.prerequisites %}
+                        <div class="course-prereq">
+                            Prerequisites: {{ course.prerequisites }}
+                        </div>
+                    {% endif %}
+                    <!-- 
+                      If you have special recitation data, you'd add a nested loop or something similar here 
+                      to display recitation info 
+                    -->
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+</body>
+</html>
