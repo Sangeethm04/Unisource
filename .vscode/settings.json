@@ -1,3 +1,43 @@
 {
-    "liveServer.settings.port": 5501
+    "liveServer.settings.port": 5501,
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "MYSQL LOCAL",
+            "username": "root",
+            "connectionTimeout": 5000,
+            "database": "Contacts"
+        },
+        {
+            "pgOptions": {
+                "ssl": {
+                    "rejectUnauthorized": false
+                }
+            },
+            "previewLimit": 50,
+            "server": "dpg-cqt6vmaj1k6c73buvdc0-a.ohio-postgres.render.com",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "autogen",
+            "database": "users_pdfgen",
+            "username": "users_pdfgen_user",
+            "connectionTimeout": 5000
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "unisource",
+            "database": "unisourcedb",
+            "username": "svm227"
+        }
+    ]
 }

@@ -4,144 +4,140 @@
     <meta charset="UTF-8">
     <title>CSE Courses</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .course-section { margin-bottom: 30px; }
-        .course-section h2 { border-bottom: 2px solid #333; padding-bottom: 10px; }
-        .course { border-bottom: 1px solid #ccc; padding: 15px 0; }
-        .course-title { font-weight: bold; color: #333; }
-        .course-details { color: #666; }
-        .disclaimer { background-color: #f4f4f4; padding: 10px; margin: 10px 0; }
-        a { color: #1b75bc; }
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 20px; 
+        }
+        .course-section { 
+            margin-bottom: 30px; 
+        }
+        .course { 
+            border-bottom: 1px solid #ccc; 
+            padding: 15px 0; 
+        }
+        .course-title { 
+            font-weight: bold; 
+            color: #333; 
+        }
+        .course-details, .course-schedule, .course-recitation, 
+        .course-lab, .course-instructor, .course-extra, 
+        .course-links, .course-tuition, .course-titles, 
+        .course-description, .course-short { 
+            color: #666; 
+            margin: 5px 0;
+        }
+        .disclaimer { 
+            background-color: #f4f4f4; 
+            padding: 10px; 
+            margin: 10px 0; 
+        }
+        a { 
+            color: #1b75bc; 
+        }
     </style>
 </head>
 <body>
     <h1>CSE Course Listings</h1>
 
-    <!-- ====================== SUMMER 2024 ============================= -->
+    <!-- All Courses Section -->
     <div class="course-section">
-        <h2>Summer 2024 Courses</h2>
+        <h2>All Courses</h2>
         <div class="disclaimer">
-            NOTE: This listing represents our current plan for the semester in question.
-            Course offerings and class times are occasionally subject to change for reasons beyond our control.
+            NOTE: This listing displays all course details as provided by the database.
+            Some fields may be empty if no data is available.
         </div>
-
-        <!-- ========== Full Summer Session ========== -->
-        <h3>Full Summer Session (5/20/2024 - 8/08/2024)</h3>
+        
         {% for course in courses %}
-            {% if course.semester == "Summer2024" and course.session_type == "Full" %}
-                <div class="course">
-                    <div class="course-title">
-                        {{ course.code }} {{ course.name }}
-                    </div>
-                    <div class="course-details">
-                        {{ course.schedule }}, {{ course.professor }}
-                    </div>
-                    <div class="course-description">
-                        {{ course.description }}
-                    </div>
-                    {% if course.prerequisites %}
-                        <div class="course-prereq">
-                            Prerequisites:
-                            <a href="#">
-                                {{ course.prerequisites }}
-                            </a>
-                        </div>
-                    {% endif %}
+            <div class="course">
+                <!-- Basic Course Info -->
+                <div class="course-title">
+                    {{ course.Course }} - {{ course.Course_Title }}
                 </div>
-            {% endif %}
-        {% endfor %}
-
-        <!-- ========== Summer Session I ========== -->
-        <h3>Summer Session I (5/20/2024 - 6/29/2024)</h3>
-        {% for course in courses %}
-            {% if course.semester == "Summer2024" and course.session_type == "SessionI" %}
-                <div class="course">
-                    <div class="course-title">
-                        {{ course.code }} {{ course.name }}
-                    </div>
-                    <div class="course-details">
-                        {{ course.schedule }}, {{ course.professor }}
-                    </div>
-                    <div class="course-description">
-                        {{ course.description }}
-                    </div>
-                    {% if course.prerequisites %}
-                        <div class="course-prereq">
-                            Prerequisites:
-                            <a href="#">
-                                {{ course.prerequisites }}
-                            </a>
-                        </div>
-                    {% endif %}
+                <div class="course-details">
+                    Status: {{ course.Status }} | 
+                    Enrollment Capacity: {{ course.Enrollment_Capacity }} | 
+                    Enrollment: {{ course.Enrollment }} | 
+                    Waitlist Capacity: {{ course.Waitlist_Capacity }} | 
+                    Waitlist Enrollment: {{ course.Waitlist_Enrollment }} | 
+                    Projected Enrollment: {{ course.Projected_Enrl }} | 
+                    Credit Hours: {{ course.Credit_Hours }} | 
+                    Bill Hours: {{ course.Bill_Hours }}
                 </div>
-            {% endif %}
-        {% endfor %}
-
-        <!-- ========== Summer Session II ========== -->
-        <h3>Summer Session II (7/01/2024 - 8/8/2024)</h3>
-        {% for course in courses %}
-            {% if course.semester == "Summer2024" and course.session_type == "SessionII" %}
-                <div class="course">
-                    <div class="course-title">
-                        {{ course.code }} {{ course.name }}
-                    </div>
-                    <div class="course-details">
-                        {{ course.schedule }}, {{ course.professor }}
-                    </div>
-                    <div class="course-description">
-                        {{ course.description }}
-                    </div>
-                    {% if course.prerequisites %}
-                        <div class="course-prereq">
-                            Prerequisites:
-                            <a href="#">
-                                {{ course.prerequisites }}
-                            </a>
-                        </div>
-                    {% endif %}
+                
+                <!-- Meeting & Location Info -->
+                <div class="course-schedule">
+                    Meeting: {{ course.Meeting_Desc }} 
+                    {% if course.Days %} on {{ course.Days }} {% endif %}
+                    {% if course.Time %} at {{ course.Time }} {% endif %} 
+                    {% if course.BldgRoom %} in {{ course.BldgRoom }} {% endif %}<br>
+                    Classroom Attributes: {{ course.Class_Room_Attributes }}
                 </div>
-            {% endif %}
+                
+                <!-- Recitation Info -->
+                <div class="course-recitation">
+                    Recitation: {{ course.Rec_Mtg_Desc }} 
+                    {% if course.Recitation_Days %} on {{ course.Recitation_Days }} {% endif %}
+                    {% if course.Recitation_Time %} at {{ course.Recitation_Time }} {% endif %}<br>
+                    Recitation Building/Room: {{ course.Recitation_BldgRoom }} | 
+                    Recitation Room Attributes: {{ course.Rec_Room_Attributes }}
+                </div>
+                
+                <!-- Lab Info -->
+                <div class="course-lab">
+                    Lab: {{ course.Lab_Mtg_Desc }} 
+                    {% if course.Lab_Days %} on {{ course.Lab_Days }} {% endif %}
+                    {% if course.Lab_Time %} at {{ course.Lab_Time }} {% endif %}<br>
+                    Lab Building/Room: {{ course.Lab_BldgRoom }} | 
+                    Lab Room Attributes: {{ course.Lab_Room_Attributes }}
+                </div>
+                
+                <!-- Instructors -->
+                <div class="course-instructor">
+                    Primary Instructor: {{ course.Primary_Instructor }} 
+                    {% if course.Primary_Instructor_LIN %} ({{ course.Primary_Instructor_LIN }}){% endif %}<br>
+                    Secondary Instructors: {{ course.Secondary_Instructors }}
+                </div>
+                
+                <!-- Additional Attributes -->
+                <div class="course-extra">
+                    Attributes: {{ course.Attributes }} | 
+                    Part of Term: {{ course.Part_of_Term }} | 
+                    Schedule Code: {{ course.Schedule_Code }} | 
+                    Special Approval: {{ course.Special_Approval }} | 
+                    Cross List Code: {{ course.Cross_List_Code }}
+                </div>
+                
+                <!-- Link Information -->
+                <div class="course-links">
+                    Link Identifier: {{ course.Link_Identifier }} | 
+                    Link Connector: {{ course.Link_Connector }}
+                </div>
+                
+                <!-- Tuition & Campus Info -->
+                <div class="course-tuition">
+                    Tuition Fees: {{ course.Tuition_Fees }} | 
+                    Campus Code: {{ course.Campus_Code }} | 
+                    Instructional Method: {{ course.Instructional_Method }} | 
+                    Grade Mode: {{ course.Grade_Mode }}
+                </div>
+                
+                <!-- Titles & Modalities -->
+                <div class="course-titles">
+                    Long Title: {{ course.Long_Title }} | 
+                    Modalities: {{ course.Modalities }}
+                </div>
+                
+                <!-- Detailed and Short Descriptions -->
+                <div class="course-description">
+                    {{ course.Long_Text }}
+                </div>
+                <div class="course-short">
+                    {{ course.Short_Text }}
+                </div>
+            </div>
         {% endfor %}
     </div>
-
-    <!-- ====================== FALL 2024 ============================== -->
-    <div class="course-section">
-        <h2>Fall 2024 Courses</h2>
-        <!-- Example disclaimers (you could store these in your DB or keep them static) -->
-        <div class="disclaimer">
-            This listing represents our current plan for the semester.
-            Course offerings and times are subject to change.
-        </div>
-        <div class="non-major-info">
-            Space is extremely limited. Highly qualified non-majors can request space by contacting the Associate Chair.
-        </div>
-
-        <!-- Loop over all Fall 2024 courses -->
-        {% for course in courses %}
-            {% if course.semester == "Fall2024" %}
-                <div class="course">
-                    <div class="course-title">
-                        {{ course.code }} {{ course.name }}
-                    </div>
-                    <div class="course-details">
-                        {{ course.schedule }}, {{ course.professor }}
-                    </div>
-                    <div class="course-description">
-                        {{ course.description }}
-                    </div>
-                    {% if course.prerequisites %}
-                        <div class="course-prereq">
-                            Prerequisites: {{ course.prerequisites }}
-                        </div>
-                    {% endif %}
-                    <!-- 
-                      If you have special recitation data, you'd add a nested loop or something similar here 
-                      to display recitation info 
-                    -->
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
-
 </body>
 </html>
