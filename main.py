@@ -33,6 +33,16 @@ except Exception as e:
 
 app = Flask(__name__)
 
+@app.after_request
+def add_security_headers(response):
+    # Allow embedding only from engineering.lehigh.edu
+    response.headers["X-Frame-Options"] = "ALLOW-FROM https://engineering.lehigh.edu"
+    
+    # Modern alternative to allow only engineering.lehigh.edu in an iframe
+    response.headers["Content-Security-Policy"] = "frame-ancestors 'self' https://engineering.lehigh.edu"
+    
+    return response
+
 @app.route("/courses")
 def courses():
     print("Courses route accessed.")
