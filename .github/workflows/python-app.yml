@@ -1,0 +1,32 @@
+name: Deploy Application CI/CD
+
+on:
+  push:
+    branches:
+      - main  # Trigger deployment on push to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Change based on your environment
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Python (if needed for any SSH operations)
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'  # Specify the Python version you are using
+
+      # Step 3: Set up SSH to connect to your remote server
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # Make sure to store the private key in GitHub Secrets
+
+      # Step 4: Run the deployment script on the remote server
+      - name: Run deploy script on remote server
+        run: |
+          ssh -o StrictHostKeyChecking=no egn227@ubuunisrcdev01.cse.lehigh.edu "bash -s" < ./deploy.sh
