@@ -1,11 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Full-Height Iframe</title>
+  <style type="text/css">
+    /* Make sure html and body fill the entire browser viewport */
+        html, body {
+          margin: 0;
+          padding: 0;
+          width: 100%;
+          height: 100%;
+        }
+    
+        /* Force the iframe to fill the window */
+        iframe {
+          display: block;       /* Removes default inline spacing */
+          width: 100%;
+          height:2000px;
+          border: none;
+        }	</style>
 </head>
 <body>
-    <iframe width="100%" height="1000px" src="http://127.0.0.1:5000/courses"></iframe>
+  <div class="iframe-container">sd
+    <iframe src="https://128.180.121.144:8000/courses" allowfullscreen></iframe>
+  </div>
 </body>
 </html>

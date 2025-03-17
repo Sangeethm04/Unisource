@@ -53,7 +53,7 @@
             <div class="course">
                 <!-- Basic Course Info -->
                 <div class="course-title">
-                    {{ course.Course }} - {{ course.Course_Title }}
+                    {{ course.Course }} - {{ course.Long_Title }}
                 </div>
                 <div class="course-details">
                     Status: {{ course.Status }} | 
@@ -75,29 +75,48 @@
                     Classroom Attributes: {{ course.Class_Room_Attributes }}
                 </div>
                 
-                <!-- Recitation Info -->
+                <!-- Recitation Info: Display only if Rec_Mtg_Desc is not "None" -->
+                {% if course.Rec_Mtg_Desc and course.Rec_Mtg_Desc != "None" %}
                 <div class="course-recitation">
-                    Recitation: {{ course.Rec_Mtg_Desc }} 
-                    {% if course.Recitation_Days %} on {{ course.Recitation_Days }} {% endif %}
-                    {% if course.Recitation_Time %} at {{ course.Recitation_Time }} {% endif %}<br>
+                Recitation: {{ course.Rec_Mtg_Desc }}
+                {% if course.Recitation_Days and course.Recitation_Days != "None" %}
+                    on {{ course.Recitation_Days }}
+                {% endif %}
+                {% if course.Recitation_Time and course.Recitation_Time != "None" %}
+                    at {{ course.Recitation_Time }}
+                {% endif %}
+                <br>
+                {% if course.Recitation_BldgRoom and course.Recitation_BldgRoom != "None" and course.Rec_Room_Attributes and course.Rec_Room_Attributes != "None" %}
                     Recitation Building/Room: {{ course.Recitation_BldgRoom }} | 
                     Recitation Room Attributes: {{ course.Rec_Room_Attributes }}
+                {% endif %}
                 </div>
+                {% endif %}
                 
                 <!-- Lab Info -->
+                {% if course.Lab_Mtg_Desc and course.Lab_Mtg_Desc != "None" %}
                 <div class="course-lab">
                     Lab: {{ course.Lab_Mtg_Desc }} 
-                    {% if course.Lab_Days %} on {{ course.Lab_Days }} {% endif %}
-                    {% if course.Lab_Time %} at {{ course.Lab_Time }} {% endif %}<br>
-                    Lab Building/Room: {{ course.Lab_BldgRoom }} | 
-                    Lab Room Attributes: {{ course.Lab_Room_Attributes }}
+                    {% if course.Lab_Days and course.Lab_Days != "None" %} on {{ course.Lab_Days }} {% endif %}
+                    {% if course.Lab_Time and course.Lab_Time != "None" %} at {{ course.Lab_Time }} {% endif %}<br>
+                    {% if course.Lab_BldgRoom and course.Lab_BldgRoom != "None" %}
+                        Lab Building/Room: {{ course.Lab_BldgRoom }}
+                    {% endif %}
+                    {% if course.Lab_Room_Attributes and course.Lab_Room_Attributes != "None" %}
+                        | Lab Room Attributes: {{ course.Lab_Room_Attributes }}
+                    {% endif %}
                 </div>
+              {% endif %}
                 
                 <!-- Instructors -->
                 <div class="course-instructor">
                     Primary Instructor: {{ course.Primary_Instructor }} 
                     {% if course.Primary_Instructor_LIN %} ({{ course.Primary_Instructor_LIN }}){% endif %}<br>
-                    Secondary Instructors: {{ course.Secondary_Instructors }}
+                    {% if course.Secondary_Instructors and course.Secondary_Instructors != "None" %}
+                    <div class="course-instructor">
+                        Secondary Instructors: {{ course.Secondary_Instructors }}
+                    </div>
+                    {% endif %}
                 </div>
                 
                 <!-- Additional Attributes -->
@@ -125,16 +144,16 @@
                 
                 <!-- Titles & Modalities -->
                 <div class="course-titles">
-                    Long Title: {{ course.Long_Title }} | 
+                  
                     Modalities: {{ course.Modalities }}
                 </div>
                 
                 <!-- Detailed and Short Descriptions -->
                 <div class="course-description">
-                    {{ course.Long_Text }}
+                   Full Course Description: {{ course.Long_Text }}
                 </div>
                 <div class="course-short">
-                    {{ course.Short_Text }}
+                    Short Course Description: {{ course.Short_Text }}
                 </div>
             </div>
         {% endfor %}
