@@ -49,7 +49,7 @@ def courses():
     
     cursor = connection.cursor()
     # Query the new courses table (adjust the schema/table name as needed)
-    cursor.execute("SELECT * FROM my_schema.courses")
+    cursor.execute("SELECT * FROM my_schema.summer25_courses")
     courses_fetched = cursor.fetchall()
     print("Fetched Data:", courses_fetched)
 
