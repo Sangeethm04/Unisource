@@ -1,1 +1,1 @@
-select * from courses;
+select * from fall25_courses

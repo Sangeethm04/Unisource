@@ -8,7 +8,7 @@ DB_NAME = os.getenv("DB_NAME")
 DB_USER = os.getenv("DB_USERNAME")
 DB_PASS = os.getenv("DB_PASSWORD")
 DB_PORT = os.getenv("DB_PORT")
-CSV_FILE_PATH = "Summer 2025 CSE Course Offerings without independent studies.csv" 
+CSV_FILE_PATH = "Fall 2025 CSE Course Offerings without independent studies.csv" 
 
 def main():
 
@@ -61,7 +61,7 @@ def main():
 
    
     insert_query = f"""
-        INSERT INTO my_schema.summer25_courses ({", ".join(columns)})
+        INSERT INTO my_schema.fall25_courses ({", ".join(columns)})
         VALUES ({", ".join(["%s"] * len(columns))});
     """
 
